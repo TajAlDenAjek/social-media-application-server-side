@@ -7,6 +7,7 @@ const {User}=require(path.join(__dirname,'..','models'));
 
 const register=async (req,res)=>
 {
+
     const salt = await bcrypt.genSalt(10);
     req.body.password = await bcrypt.hash(req.body.password, salt);
     const user= await User.create({username:req.body.username,email:req.body.email,password:req.body.password});
