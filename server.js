@@ -7,6 +7,8 @@ const app=express();
 const corsOptions=require(path.join(__dirname,'config','corsOptions'));
 const db=require(path.join(__dirname,'models','index.js'));
 
+// third-party middlewares
+const cookieParser = require('cookie-parser');
 
 // built-in middlewares 
 const errorHandlerMiddleware = require(path.join(__dirname,'middlewares','error-handler'));
@@ -39,6 +41,7 @@ app.use(
     })
 );
 app.use(express.json()); 
+app.use(cookieParser());
 app.use('/public/images',authenticated,express.static(path.join(__dirname,'public','images')));
 app.use(helmet());
 app.use(cors(corsOptions));

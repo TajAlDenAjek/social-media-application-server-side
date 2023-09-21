@@ -38,6 +38,9 @@ const swaggerDocument=
         "/api/auth/logout":{
             get:reg_login_logout.logout
         },
+        "/api/auth/refresh":{
+            get:reg_login_logout.refresh
+        },
         "/api/home/search{?text=queryString}":{
             get:home.search
         },

@@ -10,6 +10,7 @@ const authenticated=require(path.join(__dirname,'..','middlewares','authenticati
 router.post('/register',authValidation.register,authController.register);
 router.post('/login',authValidation.login,authController.login);
 router.get('/logout',authenticated,authController.logout);
+router.get('/refresh',authController.refreshAToken);
 
 module.exports = router;
 

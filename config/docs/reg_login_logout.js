@@ -75,7 +75,7 @@ const login={
         <li><b>valid email</br></b></li>
         <li><b>and a password</b></b></li>
     </ul>
-    <h3> Note : Keep your token safe you need to use it </h3>
+    <h3> Note : Keep your token safe you need to use it && you will recieve a cookie </h3>
     `,
     requestBody:{
         required:true,
@@ -106,7 +106,7 @@ const login={
                             "token": "the token string"
                         }
                     }
-                }
+                },
             }
         },
         400:{
@@ -178,12 +178,65 @@ const logout={
     }
 }
 
+const refresh={
+    tags:["register login && logout"],
+    description:`refresh token route when access token expired request this route to give a new life</br >
+    you need to pass in header a cookie name jwt and the refresh token you recieved when login
+    " Cookie jwt=refresh token"
+    <h3> Note : Keep your token safe you need to use it </h3>
+    `,
+    requestBody:{
+        required:true,
+        content:{
+            "application/json":{
+                schema:{
+                    type:"Object",
+                    example:{
+                        email:"potato@email.com",
+                        password:"potatoPassword"
+                    }
+                }
+            }
+        },
+    },
+    responses:{
+        200:{
+            description:"OK",
+            content:{
+                "application/json":{
+                    schema:{
+                        type:"Object",
+                        example:{
+                            "user": {
+                                "id": 10,
+                                "username": "potato"
+                            },
+                            "token": "the token string"
+                        }
+                    }
+                }
+            }
+        },
+        403:{
+            description:"Forbidden",
+            content:{
+                "application/json":{
+                    schema:{
+                        type:"Object",
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 const reg_login_logout=
 {
     register,
     login,
     logout,
+    refresh
 }
 
 

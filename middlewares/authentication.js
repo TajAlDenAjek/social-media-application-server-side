@@ -16,15 +16,16 @@ const auth = async (req, res, next) =>
     {
         const payload = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
         req.user = { id: payload.id, username: payload.username };
-        let refreshToken=await User.findOne({where:{id:payload.id},attributes:['refreshToken']});
-        refreshToken=refreshToken.dataValues.refreshToken;
-        if(refreshToken===null||refreshToken!==accessToken)
-            throw new UnauthenticatedError('Authentication invalid');
+        // let refreshToken=await User.findOne({where:{id:payload.id},attributes:['refreshToken']});
+        // refreshToken=refreshToken.dataValues.refreshToken;
+        // if(refreshToken===null||refreshToken!==accessToken)
+            // throw new UnauthenticatedError('Authentication invalid');
         next()
     } catch (error)
     {
         throw new UnauthenticatedError('Authentication invalid');
     }
 }
+
 
 module.exports=auth;

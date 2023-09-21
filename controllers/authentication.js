@@ -33,16 +33,45 @@ const login=async (req,res)=>
             expiresIn:process.env.REFRESH_TOKEN_JWT_LIFETIME,
         }
     );
-    refreshToken=accessToken;
+    // refreshToken=accessToken;
     const result=await User.update({refreshToken:refreshToken},{where:{id:user.id}});
+    res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
     res.status(StatusCodes.OK).json({ user: {id:user.id ,username: user.username } , token:accessToken });
 }
 
 const logout=async(req,res)=>
 {
+    // const cookies = req.cookies;
+    // if (!cookies?.jwt) return res.sendStatus(204); //No content
+    // const refreshToken = cookies.jwt;
     const result=await User.update({refreshToken:null},{where:{id:req.user.id}});
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
     res.sendStatus(StatusCodes.NO_CONTENT);
 }
 
-const authController={register,login,logout};
+const refreshAToken=async (req,res)=>
+{
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(StatusCodes.UNAUTHORIZED);
+    const refreshToken=cookies.jwt;
+    const user=await User.findOne({where:{refreshToken}});
+    if (!user) return res.sendStatus(StatusCodes.FORBIDDEN);  
+    jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        (err,decoded) =>{
+            if (err || user.username !== decoded.username) return res.sendStatus(StatusCodes.FORBIDDEN);
+            const accessToken=jwt.sign(
+                { id: user.id, username: user.username },
+                process.env.ACCESS_TOKEN_SECRET,
+                {
+                  expiresIn: process.env.ACCESS_TOKEN_JWT_LIFETIME,
+                }
+            );
+            res.status(StatusCodes.OK).json({ user: {id:user.id ,username: user.username } , token:accessToken });
+        }
+    );
+}
+
+const authController={register,login,logout,refreshAToken};
 module.exports=authController;
