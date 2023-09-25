@@ -5,6 +5,7 @@ const { UnauthenticatedError } = require(path.join(__dirname,'..','errors','unau
 
 const corsOptions=
 {
+	credentials: true,
     origin:(origin,callback)=>
     {
         if(whitelist.indexOf(origin)!==-1||origin==undefined)
