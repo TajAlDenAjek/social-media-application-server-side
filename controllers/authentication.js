@@ -59,8 +59,12 @@ const refreshAToken=async (req,res)=>
     jwt.verify(
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
-        (err,decoded) =>{
-            if (err || user.username !== decoded.username) return res.sendStatus(StatusCodes.FORBIDDEN);
+        async (err,decoded) =>{
+            if (err || user.username !== decoded.username){
+                const result=await User.update({refreshToken:null},{where:{id:user.id}});
+				res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+				return res.sendStatus(StatusCodes.FORBIDDEN);
+			}
             const accessToken=jwt.sign(
                 { id: user.id, username: user.username },
                 process.env.ACCESS_TOKEN_SECRET,
