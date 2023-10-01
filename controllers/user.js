@@ -33,7 +33,7 @@ const updateUser=async(req,res)=>
     if(patchUpdate.password){
         const salt = await bcrypt.genSalt(10);
         patchUpdate.password = await bcrypt.hash(patchUpdate.password, salt);
-        patchUpdate.refreshToken="reloginRequired";
+        // patchUpdate.refreshToken="reloginRequired";
     }
     const result = await User.update(patchUpdate, {where: {id:req.params.id}});
     res.status(StatusCodes.OK).json({msg:"updated successfully"});
