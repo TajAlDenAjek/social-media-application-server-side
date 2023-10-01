@@ -42,11 +42,11 @@ app.use(
 );
 app.use(express.json()); 
 app.use(cookieParser());
-app.use('/public/images',authenticated,express.static(path.join(__dirname,'public','images')));
 app.use(helmet());
 app.use(cors(corsOptions));
 app.use(xss());
 
+app.use('/api/public/images',authenticated,express.static(path.join(__dirname,'public','images')));
 app.use(logger);
 app.use(credentials);
 
