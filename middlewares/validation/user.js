@@ -48,7 +48,7 @@ const updateProfileOfUser=async(req,res,next)=>
         firstName:'string',
         lastName:'string',
         country:'string',
-        password: "string|min:8|max:20",
+        password: "required|string|min:8|max:20",
         gender:`string|in:${expectedValues.join(',')}`,
         birthday:'date',
     };
