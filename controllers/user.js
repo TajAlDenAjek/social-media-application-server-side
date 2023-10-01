@@ -54,6 +54,7 @@ const deleteUser=async(req,res)=>
 
     // delete profile
     const result=await User.destroy({ where: { id: userId }});
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
     res.status(StatusCodes.OK).json({msg:"account has been deleted"});
 };
 
