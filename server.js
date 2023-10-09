@@ -33,13 +33,13 @@ const initializeSocket=require(path.join(__dirname,'socket'));
 
 // using middlewares and actual routes
 app.set('trust proxy', 1);
-app.use(
-    rateLimiter(
-    {
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100, // limit each IP to 100 requests per windowMs
-    })
-);
+// app.use(
+//     rateLimiter(
+//     {
+//         windowMs: 15 * 60 * 1000, // 15 minutes
+//         max: 100, // limit each IP to 100 requests per windowMs
+//     })
+// );
 app.use(express.json()); 
 app.use(cookieParser());
 app.use(helmet());

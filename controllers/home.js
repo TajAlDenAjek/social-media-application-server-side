@@ -16,7 +16,7 @@ const search=async(req,res)=>
                 [Op.like]:`%${req.query.text}%`
             },
         },
-        attributes: ['id','username', 'picturePath']
+        attributes: ['id','username', 'picturePath','state']
     });
     const groups=await Group.findAll({
         where:{

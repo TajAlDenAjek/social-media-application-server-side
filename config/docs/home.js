@@ -33,12 +33,14 @@ const search={
                               {
                                 "id": 2,
                                 "username": "updatedUsername",
-                                "picturePath": "image-1690691170494.PNG"
+                                "picturePath": "image-1690691170494.PNG",
+                                "state":"friends"
                               },
                               {
                                 "id": 5,
                                 "username": "User3",
-                                "picturePath": null
+                                "picturePath": null,
+                                "state":null
                               }
                             ],
                             "groups": [
