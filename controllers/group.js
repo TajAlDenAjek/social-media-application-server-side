@@ -3,8 +3,16 @@ const {Group , GroupUser , User , Post , GroupPost , Reaction, Comment ,Sequeliz
 
 const createGroup = async (req , res) =>{
     let user = req.user ; 
-    if(req.file) data.filename = req.file.filename ;
-    let group = await Group.create({groupName:req.body.groupName , groupDescription: req.body.groupDescription , groupPicture:data.filename });
+    let groupData={}
+    if(req.body.data)
+    {
+        const data= JSON.parse(req.body.data);
+        groupData=data;
+    }
+    if(req.file){
+        groupData.groupPicture=req.file.filename;
+    }
+    let group = await Group.create(groupData);
     let groupUser = await GroupUser.create({userId: user.id , groupId: group.id , state:'Owner'}) ; 
     return res.json({msg:'Group created successfully' , group: group}) ;
 }

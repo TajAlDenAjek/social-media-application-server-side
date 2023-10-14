@@ -73,11 +73,18 @@ Validator.registerAsync('groupPostExists' , async (value , attribute , req , pas
     }
 });
 const checkGroupData = async (req, res , next)=>{
+    let groupData={};
+    
+    if(req.body.data)
+    {
+        const data = JSON.parse(req.body.data);
+        groupData=data;
+    }
     let validationRule = {
         groupName:'required|string',
         groupDescription:'required|string'
     };
-    let validator = new Validator(req.body,validationRule) ;
+    let validator = new Validator(groupData,validationRule) ;
     if(validator.passes()){
         return next() ; 
     }

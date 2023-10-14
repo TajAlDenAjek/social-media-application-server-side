@@ -36,7 +36,7 @@ const { groupValidation  , reactionValidation } = require(path.join(
   "validation"
 ));
 
-router.post("/", groupValidation.checkGroupData , uploadImage , groupController.createGroup);
+router.post("/", uploadImage,groupValidation.checkGroupData , groupController.createGroup);
 router.get("/my", groupController.MyGroups);
 router.post(
   "/:groupId/join",
